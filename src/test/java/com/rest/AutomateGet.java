@@ -51,7 +51,6 @@ public class AutomateGet {
                 + "ApiKey.properties");
         props=new Properties();
         props.load(reader);
-
     }
 
     @Test
