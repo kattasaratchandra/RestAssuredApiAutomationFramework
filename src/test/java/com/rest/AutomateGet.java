@@ -12,11 +12,16 @@ package com.rest;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.Properties;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -24,22 +29,36 @@ import static org.hamcrest.Matchers.*;
 
 public class AutomateGet {
 
+    public Properties props;
+
     @Test
-    public void validateGetStatusCode(){
+    public void validateGetStatusCode() throws IOException {
         given()
                 .baseUri("https://api.getpostman.com")
-                .header("X-Api-Key", "PMAK-636eef30c5fa680452791330-fa23e3dc5d8f983951ff29d23709ee975a").
+                .header("X-Api-Key", props.getProperty("key")).
         when().get("/workspaces").
         then().log().all()
                 .assertThat()
                 .statusCode(200);
     }
 
+    /* using before class to get the required api key from properties file which helps in
+    hiding the key
+     */
+    @BeforeClass
+    public void readApiKey() throws IOException {
+        FileReader reader=new FileReader(System.getProperty("user.dir") + System.getProperty("file.separator")
+                + "ApiKey.properties");
+        props=new Properties();
+        props.load(reader);
+
+    }
+
     @Test
     public void validateGetResponseBodyUsingHamcrestMatchers(){
         given()
                 .baseUri("https://api.getpostman.com")
-                .header("X-Api-Key", "PMAK-636eef30c5fa680452791330-fa23e3dc5d8f983951ff29d23709ee975a").
+                .header("X-Api-Key", props.getProperty("key")).
                 when().get("/workspaces").
                 then().log().all()
                 .assertThat()
@@ -69,7 +88,7 @@ public class AutomateGet {
         // response is an interface, and we use extract().response() to get the response
         Response response = given()
                 .baseUri("https://api.getpostman.com")
-                .header("X-Api-Key", "PMAK-636eef30c5fa680452791330-fa23e3dc5d8f983951ff29d23709ee975a").
+                .header("X-Api-Key", props.getProperty("key")).
                 when().get("/workspaces").
                 then()
 //                .log().all()
@@ -89,7 +108,7 @@ public class AutomateGet {
         // we can convert the response to string using asString()
         String response = given()
                 .baseUri("https://api.getpostman.com")
-                .header("X-Api-Key", "PMAK-636eef30c5fa680452791330-fa23e3dc5d8f983951ff29d23709ee975a").
+                .header("X-Api-Key", props.getProperty("key")).
                 when().get("/workspaces").
                 then()
 //                .log().all()
@@ -116,7 +135,7 @@ public class AutomateGet {
         // we can convert the response to string using asString()
         String name = given()
                 .baseUri("https://api.getpostman.com")
-                .header("X-Api-Key", "PMAK-636eef30c5fa680452791330-fa23e3dc5d8f983951ff29d23709ee975a").
+                .header("X-Api-Key", props.getProperty("key")).
                 when().get("/workspaces").
                 then()
                 .log().all()
@@ -135,7 +154,7 @@ public class AutomateGet {
     public void validateResponseBodyHamcrestMatchersLearnings(){
         given()
                 .baseUri("https://api.getpostman.com")
-                .header("X-Api-Key", "PMAK-636eef30c5fa680452791330-fa23e3dc5d8f983951ff29d23709ee975a").
+                .header("X-Api-Key", props.getProperty("key")).
                 when().get("/workspaces").
                 then().log().all()
                 .assertThat()
