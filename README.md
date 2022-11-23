@@ -24,3 +24,9 @@ names and values, used enhance for loop to get all headers name and values
 5. To get multi value response header, have used getValues method which has return type as list, 
 used enhanced for loop to get all the multi values
 ---------
+Request specification
+1. we can declare common code as request specification and reuse it to avoid code duplication
+2. alternate way for request specification is using request spec builder
+3. we can use rest assured default request specification and avoid using given()
+4. we can query the request specification using querable request specification
+--------
