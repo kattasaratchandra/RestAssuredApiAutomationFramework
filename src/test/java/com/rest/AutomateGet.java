@@ -35,7 +35,7 @@ public class AutomateGet {
     public void validateGetStatusCode() throws IOException {
         given()
                 .baseUri("https://api.getpostman.com")
-                .header("X-Api-Key", props.getProperty("key")).
+                .header("X-Ai-Key", props.getProperty("key")).
         when().get("/workspaces").
         then().log().all()
                 .assertThat()

@@ -25,8 +25,15 @@ names and values, used enhance for loop to get all headers name and values
 used enhanced for loop to get all the multi values
 ---------
 Request specification
-1. we can declare common code as request specification and reuse it to avoid code duplication
-2. alternate way for request specification is using request spec builder
-3. we can use rest assured default request specification and avoid using given()
-4. we can query the request specification using querable request specification
+1. we can declare common request as request specification and reuse it to avoid code duplication
+2. other than common requests we can append related request according to the test cases
+3. alternate way for request specification is using request spec builder
+4. we can use rest assured default request specification and avoid using given()
+5. we can query the request specification using querable request specification
+--------
+Response specification
+1. common validation can be declared as response specification and reuse it in test cases
+2. other than common validation we can append related validations according to the test cases
+3. the only difference between request and response specification is we can use request specification
+in given() method as argument but response specification can't be used in then()
 --------
