@@ -37,3 +37,6 @@ Response specification
 3. the only difference between request and response specification is we can use request specification
 in given() method as argument but response specification can't be used in then()
 --------
+1. Automated post request such that we create new workspaces
+2. Automated put request such that we update the workspace name
+3. Automated delete request such that we delete the workspace
