@@ -51,3 +51,10 @@ jackson dependency
 4. encoding format if not defined rest assured sends it by default so to disable that we use setConfig in
 request spec builder
 -----------
+Request Parameters
+1. we use query parameters for filter(example particular page number) and path parameters for 
+specific resource(example id)
+2. both parameters append to the url in specific formats. query params appends after question mark
+and in between we use & for multiple query params
+3. path parameters gets appended after slash
+-----------
