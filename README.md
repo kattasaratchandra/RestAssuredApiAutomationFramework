@@ -40,3 +40,14 @@ in given() method as argument but response specification can't be used in then()
 1. Automated post request such that we create new workspaces
 2. Automated put request such that we update the workspace name
 3. Automated delete request such that we delete the workspace
+----------
+payload multiple ways
+1. we can send request payload as File it is preferred only you have one variation of payload if multiple
+variations of payload it's not recommended
+2. we send payload in requests in the form of maps,nested maps,lists
+3. we can send request payload as map but rest assured needs to convert map to json before sending the
+request. It uses jackson library for converting map to json it's called serialisatio all we need to do is add
+jackson dependency
+4. encoding format if not defined rest assured sends it by default so to disable that we use setConfig in
+request spec builder
+-----------
