@@ -1,11 +1,14 @@
 package com.rest;
 
+import com.rest.workspace.Workspace;
+import com.rest.workspace.WorkspaceRoot;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.File;
@@ -15,15 +18,17 @@ import java.util.HashMap;
 import java.util.Properties;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 public class RequestPayloadMultipleWays {
     Properties props;
+
     @BeforeClass
     public void readApiKey() throws IOException {
-        FileReader reader=new FileReader(System.getProperty("user.dir") + System.getProperty("file.separator")
+        FileReader reader = new FileReader(System.getProperty("user.dir") + System.getProperty("file.separator")
                 + "ApiKey.properties");
-        props=new Properties();
+        props = new Properties();
         props.load(reader);
 
         RequestSpecBuilder requestSpecBuilder = new RequestSpecBuilder();
@@ -50,7 +55,7 @@ public class RequestPayloadMultipleWays {
     one variation of payload we use file
      */
     @Test
-    public void validatePostRequestPayloadAsFile(){
+    public void validatePostRequestPayloadAsFile() {
         // creating file
         File file = new File("src/main/resources/createNewWorkspacePayload.json");
         given().body(file).
@@ -69,13 +74,13 @@ public class RequestPayloadMultipleWays {
     is add jackson databind dependency in pom.xml file
      */
     @Test
-    public void validatePostRequestPayloadAsMap(){
+    public void validatePostRequestPayloadAsMap() {
         // have created nested map according to the file data
         HashMap<String, Object> map = new HashMap<>();
         HashMap<String, String> nestedMap = new HashMap<>();
-        nestedMap.put("name","myFirstWorkspace");
-        nestedMap.put("type","personal");
-        nestedMap.put("description","Rest Assured created this");
+        nestedMap.put("name", "myFirstWorkspace");
+        nestedMap.put("type", "personal");
+        nestedMap.put("description", "Rest Assured created this");
         map.put("workspace", nestedMap);
         given().body(map).
                 when()
@@ -85,6 +90,42 @@ public class RequestPayloadMultipleWays {
                 .body("workspace.name", is(equalTo("myFirstWorkspace")),
                         "workspace.id", matchesPattern("^[a-z0-9-]{36}$"));
     }
+
+    /*
+    1. we created the pojo classes for workspace and sent in request
+    2. we created data provider as well to rerun tests for multiple data
+     */
+    @Test(dataProvider = "workspace")
+    public void validatePostRequestPayloadAsPojo(String name, String type, String description) {
+        Workspace workspace = new Workspace(name, type, description);
+        WorkspaceRoot workspaceRoot = new WorkspaceRoot(workspace);
+        WorkspaceRoot deSerialiseWorkSpaceRoot =
+        given()
+                .body(workspaceRoot).
+        when()
+                .post("/workspaces").
+        then()
+                .extract()
+                .as(WorkspaceRoot.class);
+        assertThat(deSerialiseWorkSpaceRoot.getWorkspace().getName(), is(equalTo(workspace.getName())));
+        assertThat(deSerialiseWorkSpaceRoot.getWorkspace().getId(), matchesPattern("^[a-z0-9-]{36}$"));
+
+    }
+
+    @DataProvider(name = "workspace")
+    public Object[][] workspacePostData() {
+        return new Object[][]{
+                {"myFirstWorkspace", "personal", "Rest Assured created this team"},
+                {"myTeamWorkspace", "team", "Rest Assured created this team"}
+        };
+    }
+
+
+
+
+    // using data provider for testing on mulitple data.
+
+
 
 
 

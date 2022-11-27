@@ -58,3 +58,12 @@ specific resource(example id)
 and in between we use & for multiple query params
 3. path parameters gets appended after slash
 -----------
+serialisation, de-serialisation, pojo/map/list
+1. converting the java object which is in the form of either pojo/map/list to json we call as serialisation
+2. usually jackson library takes care of serialisation all we need to do is add the jackson dependencies
+3. if we want to serialise outside rest assured we use 'object mapper' class and 'write value as string'
+method to convert the java objects to json strings and use it in the request
+4. pojo classes are used usually when we want to validate entire response json body. we can do that using 
+object mapper class, read tree method
+5. de-serialisation on pojo classes, we extract the response as pojo class and use setters and getters to
+validate

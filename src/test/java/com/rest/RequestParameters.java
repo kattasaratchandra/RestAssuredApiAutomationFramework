@@ -1,5 +1,6 @@
 package com.rest;
 
+import io.restassured.config.EncoderConfig;
 import org.testng.annotations.Test;
 
 import java.util.HashMap;
@@ -94,4 +95,42 @@ public class RequestParameters {
                     .assertThat()
                     .statusCode(200);
     }
+
+    /*
+    1. the non-alphanumeric of key value pair are usually encoded in url
+    2. we use form param to send in encoded format
+    3. in body we select x-www-form-urlencoded and send as key value pair
+    4. we get internal server error if the content type doesnt match so we say rest
+    assured not to send default content type using config
+     */
+    /*
+    These are different Form content types defined by W3C. If you want to send simple text/ ASCII data,
+    then x-www-form-urlencoded will work. This is the default.But if you have to send non-ASCII
+    text or large binary data, the form-data is for that.
+    You can use Raw if you want to send plain text or JSON or any other kind of string. Like the
+    name suggests, Postman sends your raw string data as it is without modifications.
+    The type of data that you are sending can be set by using the content-type header from the drop down.
+    Binary can be used when you want to attach non-textual data to the request,
+    e.g. a video/audio file, images, or any other binary data file.
+     */
+    @Test
+    public void formUrlEncoded(){
+        HashMap<String, String> map = new HashMap<>();
+        given()
+                .baseUri("https://postman-echo.com")
+                .config(config.encoderConfig(EncoderConfig.encoderConfig()
+                        .appendDefaultContentCharsetToContentTypeIfUndefined(false)))
+                .formParam("key1", "value1")
+                .log().all().
+        when()
+                .post("/post").
+        then()
+                .log().all()
+                .assertThat()
+                .statusCode(200);
+    }
+
+
+
+
 }
