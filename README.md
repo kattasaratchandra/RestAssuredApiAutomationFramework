@@ -67,3 +67,9 @@ method to convert the java objects to json strings and use it in the request
 object mapper class, read tree method
 5. de-serialisation on pojo classes, we extract the response as pojo class and use setters and getters to
 validate
+-----------------------
+Framework design:
+started by added naive tests and improve step by step by creating robust and scalable framework design
+1. Using pojo classes removing the hard coded payload. and generated pojo classes faster with the help of
+a site
+2. Deserialized the response to pojo class and used hamcrest matchers assertions

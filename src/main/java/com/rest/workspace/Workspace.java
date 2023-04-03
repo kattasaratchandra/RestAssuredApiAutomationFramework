@@ -1,5 +1,11 @@
 package com.rest.workspace;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+/* we can use jackson annotation to ignore null values as of now we sending id as null so we ignore that by
+using json include non-null
+ */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Workspace {
 
     private String name;
