@@ -73,3 +73,7 @@ started by added naive tests and improve step by step by creating robust and sca
 1. Using pojo classes removing the hard coded payload. and generated pojo classes faster with the help of
 a site
 2. Deserialized the response to pojo class and used hamcrest matchers assertions
+3. removing spec builders from before class and created seperate class for spec builder. created request
+and request spec methods which returns respective request/response specifications
+4. for each application api we create separate class which contains reusable methods like post, get,
+update of that api only
