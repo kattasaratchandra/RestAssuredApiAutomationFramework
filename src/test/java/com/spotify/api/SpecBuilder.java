@@ -13,11 +13,18 @@ public class SpecBuilder {
             "6lvgPU3Aesr3MhFkAgaOBs6-x2P_1UpJ2Uo";
     public static RequestSpecification getRequestSpec(){
         return new RequestSpecBuilder().setBaseUri("https://api.spotify.com")
-                .setBasePath("v1")
+                .setBasePath("/v1")
                 .setContentType(ContentType.JSON)
                 .log(LogDetail.ALL)
                 .build();
     }
+    public static RequestSpecification getAccountRequestSpec(){
+        return new RequestSpecBuilder().setBaseUri("https://accounts.spotify.com")
+                .setContentType(ContentType.URLENC)
+                .log(LogDetail.ALL)
+                .build();
+    }
+
 
     public static ResponseSpecification getResponseSpec(){
         return new ResponseSpecBuilder()

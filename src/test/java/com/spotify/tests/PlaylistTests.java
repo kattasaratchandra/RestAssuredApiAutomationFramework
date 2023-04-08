@@ -1,9 +1,11 @@
 package com.spotify.tests;
 
+import com.spotify.api.TokenManager;
 import com.spotify.api.application_api.PlaylistApi;
 import com.spotify.pojo.Error;
 import com.spotify.pojo.ErrorRoot;
 import com.spotify.pojo.Playlist;
+import com.spotify.utils.DataLoader;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.LogDetail;
@@ -42,7 +44,7 @@ public class PlaylistTests {
     @Test
     public void getPlaylistTest(){
 
-        Response response = PlaylistApi.get("0KECGlxB2DsPeUtevwGlKJ");
+        Response response = PlaylistApi.get(DataLoader.getInstance().getUserId());
         assertThat(response.statusCode(), equalTo(200));
         Playlist responsePlaylist = response.as(Playlist.class);
 
@@ -58,7 +60,7 @@ public class PlaylistTests {
         playlist.setDescription("New playlist description");
         playlist.setPublic(false);
 
-        Response response = PlaylistApi.update(playlist, "0KECGlxB2DsPeUtevwGlKJ");
+        Response response = PlaylistApi.update(playlist, DataLoader.getInstance().updateUserId());
         assertThat(response.statusCode(), equalTo(200));
 
     }
