@@ -90,11 +90,11 @@ and request spec methods which returns respective request/response specification
     5. created separate request spec builder for this as base uri is different. response same mostly for 
    all apis
 
-EndPoints:
-5. created class which maintains all the endpoints which are constants
+5. EndPoints:
+   1. created class which maintains all the endpoints which are constants
 
-Property Loaders:
-7. global variables are the ones which once defined never changes we keep them in config.properties
-    1. access token variables are global here so create util class and properties.
-    2. for get and update we use unique user id for request and it wont change through out so we keep 
-   in test user data and define as properties files
+6. Property Loaders:
+   1. global variables are the ones which once defined never changes we keep them in config.properties
+       1. access token variables are global here so create util class and properties.
+       2. for get and update we use unique user id for request and it wont change through out so we keep 
+      in test user data and define as properties files
