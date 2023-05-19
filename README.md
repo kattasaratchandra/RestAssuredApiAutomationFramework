@@ -75,22 +75,26 @@ a site
 2. Deserialized the response to pojo class and used hamcrest matchers assertions
 
 Reusable methods:
+
 3. removing spec builders from before class and created seperate class for spec builder. created request
 and request spec methods which returns respective request/response specifications.
+
 4. Created two layers of reusable methods one for specific api, one which is general to all apis:
-    1. for each application api we create separate class which contains reusable methods like post, get,
-update of that api only.
-    2. we create common reusable request methods for all apis like get, post, put and update methods.
-Token Manager:
+    1. for each application api we create separate class which contains reusable methods like post, get, 
+   update of that api only.
+    2. we create common reusable request methods for all apis like get, post, put and update methods. 
+   Token Manager:
     3. Have removed hard coded access token ad created static method it will create a token if it is expired
    and return as string
     4. created reusable common method for all the apis.
     5. created separate request spec builder for this as base uri is different. response same mostly for 
-all apis
-EndPoints: 
+   all apis
+
+EndPoints:
 5. created class which maintains all the endpoints which are constants
+
 Property Loaders:
-6. global variables are the ones which once defined never changes we keep them in config.properties
+7. global variables are the ones which once defined never changes we keep them in config.properties
     1. access token variables are global here so create util class and properties.
     2. for get and update we use unique user id for request and it wont change through out so we keep 
-in test user data and define as properties files
+   in test user data and define as properties files
